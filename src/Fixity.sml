@@ -1,0 +1,3 @@
+infix |>
+infix >>=
+infixr <|>

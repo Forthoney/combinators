@@ -1,16 +1,8 @@
-structure Combinators =
+structure Combinators : COMBINATORS =
 struct
-  infix |>
-  infix >>=
-
   fun id x = x
 
   fun x |> f = f x
-
-  fun mx >>= f =
-    case mx of
-      NONE => NONE
-    | SOME x => f x
 
   fun konst x _ = x
 
@@ -26,6 +18,18 @@ struct
 
   fun on f g x y = f (g x, g y)
 
+  fun first f (x, y) = (f x, y)
+
+  fun second g (x, y) = (x, g y)
+
+  fun fork (f, g) x = (f x, g x)
+
+  fun dup x = (x, x)
+
+  fun swap (x, y) = (y, x)
+
+  fun cross (f, g) (x, y) = (f x, g y)
+
   fun tap f x = (f x; x)
 
   fun fix f =
@@ -34,4 +38,12 @@ struct
     in
       recFn
     end
+
+  structure Option =
+  struct
+    fun NONE <|> y = y
+      | x <|> _ = x
+
+    fun opt >>= f = Option.mapPartial f opt
+  end
 end

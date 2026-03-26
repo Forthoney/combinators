@@ -2,5 +2,6 @@ local
 	$(SML_LIB)/basis/basis.mlb
 in
 	../src/sources.mlb
+	../src/Fixity.sml
 	Test.sml
 end
